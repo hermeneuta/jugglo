@@ -1,6 +1,6 @@
 # Jugglo
 
-This is a hobby IMU-based juggling ball project that streams inertial data over IP/UDP to a computer for visualization and sonification. 
+This is an IMU-based juggling ball project that streams inertial data over IP/UDP to a computer for visualization and sonification. 
 
 Wi-Fi credentials live in `src/wifi_secret.h` (see below).
 
