@@ -68,6 +68,8 @@ pio device monitor -e esp32-c6-devkitc-1
 ```
 # O projekcie
 
+Więcej o szczegółach projektu znajdziesz na: https://mateuszkownacki.com/blog/stypendium/
+
 Przedsięwzięcie sfinansowane zostało ze środków Unii Europejskiej w ramach instrumentu NextGenerationEU, realizowanego poprzez Krajowy Plan Odbudowy i Zwiększania Odporności, inwestycja A2.5.1 „Program wspierania działalności podmiotów sektora kultury i przemysłów kreatywnych na rzecz stymulowania ich rozwoju”. 
 
 <img width="3066" height="592" alt="KPO_NextGenerationEU_poziom_zestawienie_podstawowe_ RGB_wariant_achromatyczny" src="https://github.com/user-attachments/assets/84548a24-0cd9-47fe-a16c-e2c95fbaedbb" />
