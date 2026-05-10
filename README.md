@@ -1,6 +1,6 @@
 # Semantyki żonglerki
 
-Dokumentacja kodu użytego podczas realizacji projektu "Semantyki żonglerki. Poszukiwanie znaczeń, kontekstów i formy". Niniejsze repozytorium zawiera wykorzystany projekt piłki do żonglowania wyposażonej w moduł IMU, która przesyła dane inercyjne przez IP/UDP do komputera, gdzie są one wizualizowane i przekształcane w dźwięk. 
+Dokumentacja kodu użytego podczas realizacji projektu "Semantyki żonglerki. Poszukiwanie znaczeń, kontekstów i formy". Niniejsze repozytorium zawiera wykorzystany projekt piłki do żonglowania wyposażonej w moduł IMU, który przesyła dane inercyjne przez IP/UDP do komputera, gdzie są one wizualizowane i przekształcane w dźwięk. 
 
 ### Pliki 3D
 Pliki 3D w formacie STL, przeznaczone do druku, znajdują się w folderze `3dfiles`. Obejmują one model piłki oraz obudowę na elektronikę. Pliki zostały wygenerowane przy użyciu CadQuery.
