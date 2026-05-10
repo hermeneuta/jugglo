@@ -1,68 +1,66 @@
-# Jugglo
+# Semantyki żonglerki
 
-This is an IMU-based juggling ball project that streams inertial data over IP/UDP to a computer for visualization and sonification. 
+Dokumentacja kodu użytego podczas realizacji projektu "Semantyki żonglerki. Poszukiwanie znaczeń, kontekstów i formy". Niniejsze repozytorium zawiera wykorzystany projekt piłki do żonglowania wyposażonej w moduł IMU, która przesyła dane inercyjne przez IP/UDP do komputera, gdzie są one wizualizowane i przekształcane w dźwięk. 
 
-Wi-Fi credentials live in `src/wifi_secret.h` (see below).
-
-### 3d files 
-
-3d files in stl (ball and electronics enclosure) for printing are in folder 3dfiles and were generated using cadquery
+### Pliki 3D
+Pliki 3D w formacie STL, przeznaczone do druku, znajdują się w folderze `3dfiles`. Obejmują one model piłki oraz obudowę na elektronikę. Pliki zostały wygenerowane przy użyciu CadQuery.
 
 ### Hardware
-
-- Board: ESP32-C6 DevKitC-1
-- IMU: BMI160 (I2C address 0x69)
-- Wiring: SCL → GPIO20, SDA → GPIO19 (internal pull-ups enabled)
-
-
-### Receiving data on the host
-- Ensure the host machine is reachable at `MASTER_HOST` on `MASTER_PORT`.
-- View raw sensor data and orientation filter output with:
+- Płytka: ESP32-C6 DevKitC-1
+- IMU: BMI160, adres I2C: `0x69`
+- Połączenia: SCL → GPIO20, SDA → GPIO19  
+  
+### Odbieranie danych na komputerze
+Upewnij się, że komputer odbierający dane jest dostępny pod adresem ustawionym w `MASTER_HOST` i na porcie `MASTER_PORT`.
+Aby podejrzeć surowe dane z czujników oraz wynik działania filtra orientacji, uruchom:
 ```bash
-> python read.py
+python read.py
+```
+
+Przykładowe dane wyjściowe:
+
+```bash
 14873,584,2,3996,-0.98681640625,-0.1142578125,0.056640625,0.244140625,0.0,0.1220703125,0,0,1767274563.513852
 14873,584,2,3996,-0.986328125,-0.11376953125,0.05810546875,0.244140625,-0.06103515625,0.06103515625,1,0,1767274563.5138826
 14873,584,2,3996,-0.98583984375,-0.11376953125,0.05908203125,0.244140625,-0.06103515625,0.06103515625,2,0,1767274563.5138955
 ...
 ```
-Each row in console spam is csv formatted imu data with following columns:
+
+Każdy wiersz wypisywany w konsoli to dane IMU w formacie CSV, z następującymi kolumnami:
+
 ```bash
 timestamp_ms,device_sequence_number,sensor_id,battery_mv,accel_x,accel_y,accel_z,gyro_x,gyro_y,gyro_z,sequence_number,checksum_good,host_timestamp
 ```
-acceleremter are in g and gyro in deg/s 
 
+Dane z akcelerometru są podawane w jednostkach g, a dane z żyroskopu w deg/s, czyli stopniach na sekundę.
 
-In order to see the basic visualisation see here: 
-```bash 
-> python read.py | python plot_raw_vis.py 
+Aby uruchomić prostą wizualizację danych, użyj:
+
+```bash
+python read.py | python plot_raw_vis.py
 ```
 
-### Development 
+### Development
 
-The project is developed with PlatformIO on the Espressif platform (tested on Ubuntu; not yet on Windows).
+Projekt jest rozwijany przy użyciu PlatformIO na platformie Espressif. Był testowany na Ubuntu i MacOS, ale nie był jeszcze testowany na Windowsie.
 
-#### TODO 
- - [ ] Easy Wi-Fi setup (without rebuilding the project / QR code or internal storage)
- - [ ] Recheck hardware design (external antenna and integrated IMU with microcontroller)
- - [ ] Pass the data to external VJ software
+### Konfiguracja danych dostępowych i komputera odbierającego dane
 
-#### Configure secrets and target host
+Plik src/wifi_secret.h jest ignorowany przez Gita. Przed zbudowaniem projektu utwórz go lokalnie:
 
-`src/wifi_secret.h` is git-ignored. Create it locally before building:
-```c
+```bash
 #define WIFI_SSID "your-ssid"
 #define WIFI_PASS "your-password"
-
-// Host that receives UDP IMU packets
+// Komputer odbierający pakiety UDP z danymi IMU
 #define MASTER_HOST "host-or-ip"
 #define MASTER_PORT 50555
 ```
-M_H
-> Note: `src/main.cpp` expects `MASTER_HOST`/`MASTER_PORT`; the default fallback defines `MASTER_*` but those macros are unused in the current code, so define the TCP_* values in your secret header.
 
+Uwaga: src/main.cpp oczekuje wartości MASTER_HOST oraz MASTER_PORT. Domyślne wartości fallback definiują MASTER_*, ale te makra nie są obecnie używane w kodzie, dlatego ustaw właściwe wartości w swoim pliku wifi_secret.h.
 
-## Build with PlatformIO
-The repository also includes `platformio.ini`:
+## Budowa z PlatformIO
+Repozytorium zawiera plik `platformio.ini`:
+
 ```bash
 pio run -e esp32-c6-devkitc-1
 pio run -e esp32-c6-devkitc-1 --target upload --upload-port /dev/ttyACM0
